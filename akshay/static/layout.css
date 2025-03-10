@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Junge&display=swap');
+
+body {
+    background-color: #A3ADCB;
+    font-family: "Junge", cursive;
+    margin: 0;
+    padding: 0;
+}
+
+.space {
+    height: 10vh;
+}
+
+.space1 {
+    height: 3vh;
+}
+
+.border {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    width: 42vw;
+    height: 50vh;
+    margin: 2px;
+    border-radius: 21px;
+    background-color: #6e7385;
+    padding: 10px;
+    display: flex;
+    justify-content: right;
+    position: fixed;
+}
+
+.innerbox {
+    background-color: #A3ADCB;
+    height: 44vh;
+    width: 25vw;
+    border-radius: 21px;
+    padding: 4px;
+    /* position: fixed; */
+    border: 1px solid black;
+}
+
+.details {
+    padding: 4px;
+}
+
+.enter {
+    padding: 4px;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid black;
+    width: 93%;
+    position: relative;
+    left: 4px;
+}
+
+.space2 {
+    height: 1.5vh;
+}
+
+.submit {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    border-radius: 9px;
+
+}
+
+.primary {
+    border-radius: 9px;
+    background-color: #DBC5C5;
+    padding: 8px 16px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: #A3ADCB;
+}
+
+.header {
+    height: 45vh;
+    width: 28vw;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 11vh;
+    position: relative;
+    top: 35vh;
+    right: -2vw;
+}
+
+.or {
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.option1 img {
+    width: 30px;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    display: flex;
+    align-items: center;
+    background-color: #6b7280;
+    color: rgb(158, 139, 139);
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    gap: 10px;
+}
+
+.dropbtn img:first-child {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.pic {
+    width: 30px;
+    border-radius: ;
+}
+
+.dropbtn span {
+    color: black;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #6e7385;
+    min-width: 200px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 3px 19px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #e6d2d2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn a {
+    text-decoration: none;
+    color: black;
+    font-family: "Junge", cursive;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 2px; 
+}
+
+.dropdown-item img {
+    width: 30px; 
+    height: 30px;
+}
+
+
+.dropdown-item a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #e6d2d2;
+}
+
+.space4{
+    height: 20vh;
+}
+
+.bottom{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bottom a{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+}
