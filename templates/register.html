@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/akshay/static/layout.css">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/layout.css">
 </head>
 
 <body>
     <div class="space"></div>
     <div class="border">
         <div class="login">
-            <div class="header">login</div>
+            <div class="header">Register</div>
             <div class="innerbox">
                 <div class="details">Username</div>
                 <div class="mb-3">
@@ -23,6 +23,12 @@
                 <div class="details">Password</div>
                 <div class="mb-3">
                     <input class="form-control mx-auto w-auto enter" name="password" placeholder="Password"
+                        type="password" required>
+                </div>
+                <div class="space2"></div>
+                <div class="details">Confirm Password</div>
+                <div class="mb-3">
+                    <input class="form-control mx-auto w-auto enter" name="confirm" placeholder="Confirm Password"
                         type="password" required>
                 </div>
             </div>
@@ -37,16 +43,16 @@
     <div class="option">
         <div class="dropdown">
             <button class="dropbtn">
-                <img src="/akshay/assets/360_F_518093233_bYlgthr8ZLyAUQ3WryFSSSn3ruFJLZHM 1.png" alt="Google Logo">
-                <a href="#">Login with Google</a>
+                <img src="/static/assets/360_F_518093233_bYlgthr8ZLyAUQ3WryFSSSn3ruFJLZHM 1.png" alt="Google Logo">
+                <a href="#">Sign in with Google</a>
             </button>
             <div class="dropdown-content">
                 <div class="dropdown-item">
-                    <img src="/akshay/assets/github1.png" alt="Github Logo">
+                    <img src="/static/assets/github1.png" alt="Github Logo">
                     <a href="#">Continue with Github</a>
                 </div>
                 <div class="dropdown-item">
-                    <img src="/akshay/assets/linkedin.png" alt="LinkedIn Logo">
+                    <img src="/static/assets/linkedin.png" alt="LinkedIn Logo">
                     <a href="#">Continue with LinkedIn</a>
                 </div>
             </div>
@@ -54,10 +60,9 @@
     </div>
     <div class="space4"></div>
     <div class="bottom">
-        <span>New User?</span>
-        <a href="register.html">Register</a>
+        <span>Already have an Account?</span>
+        <a href="/login">Login</a>
     </div>    
-
 </body>
 
 </html>

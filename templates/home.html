@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,25 +7,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HackArena</title>
-    <link rel="stylesheet" href="/akshay/static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body>
     <nav class="header">
         <span>HackArena</span>
         <div class="space">
-            <a class="header" href="login.html">Login</a>
-            <a class="header" href="Register.html">Register</a>
+            <a class="header" href="{{ url_for('login_page') }}">Login</a>
+            <a class="header" href="{{ url_for('register_page') }}">Register</a>
         </div>
     </nav>
     <div class="line"></div>
     <div class="idk">
-        <img src="/akshay/assets/pic1.jpg" alt="">
+        <img src="/static/assets/pic1.jpg" alt="HackArena Image">
         <div class="buttons">
-            <button class="hack" onclick="window.location.href='register.html'">Host</button>
-            <button class="hack" onclick="window.location.href='register.html'">Attend</button>
+            <button class="hack" onclick="window.location.href='/login'">Host</button>
+            <button class="hack"  onclick="window.location.href='/register'">Attend</button>
         </div>
-        
     </div>
     <div class="line"></div>
     <div class="bottom">
