@@ -5,7 +5,7 @@
 }
 
 body{
-    background-color: #173EB2;
+    background-color: #A3ADCB;
     padding: 0;
     margin:0;
     color: white;
@@ -65,4 +65,30 @@ body{
     width: 20px;
     height: 20px;
     pointer-events: none; 
+}
+
+.hack{
+    padding: 5px;
+}
+
+.add{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.add > button{
+    font-size: larger;
+    border-radius: 20px;
+    border: white;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.add > button > img{
+    width: 25px;
 }
