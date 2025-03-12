@@ -90,7 +90,7 @@ body {
     font-size: 11vh;
     position: relative;
     top: 35vh;
-    right: -2vw;
+    right: -1vw;
 }
 
 .or {
@@ -186,11 +186,11 @@ body {
     display: flex;
     align-items: center;
     padding: 5px;
-    gap: 2px; 
+    gap: 2px;
 }
 
 .dropdown-item img {
-    width: 30px; 
+    width: 30px;
     height: 30px;
 }
 
@@ -205,18 +205,111 @@ body {
     background-color: #e6d2d2;
 }
 
-.space4{
+.space4 {
     height: 20vh;
 }
 
-.bottom{
+.bottom {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
-.bottom a{
+.bottom a {
     text-decoration: none;
     color: black;
     font-weight: bolder;
+}
+
+.logo {
+    height: 6vh;
+    background-color: #6e7385;
+    color: white;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.logo-dp {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 0px;
+    font-size: 23px;
+    font-family: "Junge", cursive;
+}
+
+.choose {
+    background-color: #6e7385;
+    ;
+    font-family: "Junge", cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.files {
+    background-color: #828bab;
+    ;
+    border: 0;
+    font-family: "Junge", cursive;
+}
+
+.files1 {
+    background-color: rgb(139, 126, 126);
+    border: 0;
+    font-family: "Junge", cursive;
+    font-weight: bolder;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 2px solid #080808;
+    border-radius: 5px;
+    background-color: rgb(139, 126, 126);
+    color: #1a2027;
+    cursor: pointer;
+    font-family: "Junge", cursive;
+    font-weight: bolder;
+}
+
+.heading {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+}
+
+.flash-messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+    width: fit-content;
+    color: #000000;
+}
+
+
+.flash-messages ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.flash-messages li {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.download{
+    border: 2px solid black;
+    text-decoration: none;
 }

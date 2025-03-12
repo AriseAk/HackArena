@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Code</title>
+    <link rel="stylesheet" href="/static/layout.css">
+</head>
+
+<body>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
+    </div>
+    <h2 class="heading">Upload Your Code</h2>
+
+    <!-- Display messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-messages">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <form class="choose" action="/upload" method="post" enctype="multipart/form-data">
+        <input class="files" type="file" name="file">
+        <input class="files1" type="submit" value="Upload">
+    </form>
+
+    <br>
+    <a class="heading" href="/">Go Back Home</a>
+</body>
+
+</html>

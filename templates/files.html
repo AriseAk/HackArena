@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Files</title>
+    <link rel="stylesheet" href="/static/layout.css">
+</head>
+
+<body>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
+    </div>
+
+    <h2 class="heading">Uploaded Files</h2>
+
+    <div class="flash-messages">
+        <!-- <ul>
+            {% for file in files %}
+            <li>
+                {{ file.filename }}  
+                <a class="download" href="{{ url_for('serve_file', file_id=file.id) }}" target="_blank">View</a> |  
+                <a class="download" href="{{ url_for('serve_file', file_id=file.id, download='true') }}">Download</a>
+            </li>
+            {% endfor %}
+        </ul> -->
+        <ul>
+            {% for file in files %}
+                <li>
+                    <a href="{{ url_for('serve_file', file_id=file.id) }}" target="_blank">{{ file.filename }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+    <br>
+    <a class="heading" href="/">Go Back Home</a>
+</body>
+
+</html>
