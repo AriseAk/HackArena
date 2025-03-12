@@ -50,12 +50,12 @@
         <div class="dropdown">
             <button class="dropbtn">
                 <img src="/static/assets/360_F_518093233_bYlgthr8ZLyAUQ3WryFSSSn3ruFJLZHM 1.png" alt="Google Logo">
-                <a href="#">Sign in with Google</a>
+                <a href="{{ url_for('google_login') }}">Sign in with Google</a>
             </button>
             <div class="dropdown-content">
                 <div class="dropdown-item">
                     <img src="/static/assets/github1.png" alt="Github Logo">
-                    <a href="#">Continue with Github</a>
+                    <a href="{{ url_for('github_login') }}">Continue with Github</a>
                 </div>
                 <div class="dropdown-item">
                     <img src="/static/assets/linkedin.png" alt="LinkedIn Logo">
@@ -67,7 +67,7 @@
     <div class="space4"></div>
     <div class="bottom">
         <span>Already have an Account?</span>
-        <a href="/login">Login</a>
+        <a href="/loghost">Login</a>
     </div>    
 </body>
 
