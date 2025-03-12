@@ -1,0 +1,21 @@
+# Ignore environment variables and secrets
+.env
+
+# Byte-compiled / cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and databases
+*.log
+instance/
+db.sqlite3
+
+# Virtual environment
+venv/
+.env/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
