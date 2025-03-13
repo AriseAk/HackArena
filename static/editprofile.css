@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Junge&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Junge&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(163, 173, 203);
+    font-family: "Junge", cursive;
+    height: 100vh; 
+}
+
+.container {
+    text-align: center;
+    background-color: rgb(163, 173, 203); /* Matches background */
+}
+
+.logo {
+    height: 6vh;
+    background-color: #6e7385;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.logo-dp {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 0px;
+    font-size: 23px;
+    font-family: "Junge", cursive;
+}
+
+
+.b {
+    background-color: #6e7385;
+    width: fit-content;
+    padding: 10px 30px;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+    border-radius: 20px;
+    margin: 20px auto;
+
+}
+
+.h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+
+
+.iph1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.iph1 input {
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 8px;
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+.btn1, .btn2 {
+    padding: 5px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid black;
+}
+
+.btn1 {
+    background-color: white;
+}
+
+.btn2 {
+    background-color: black;
+    color: white;
+}

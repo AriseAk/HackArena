@@ -10,7 +10,9 @@
 
 <body>
     <div class="nav">
-        <div class="head">HackArena</div>
+        <div class="head logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
         <div class="right">
             <div class="searchbar">
                 <input class="search" type="text" placeholder="Search For Hackathons">
@@ -19,11 +21,11 @@
             <button class="profile">
                 <div class="pro"></div><img src="/static/assets/dropdown.svg" alt="">
                 <div class="dropdown-content">
-                    <li>Name-</li>
-                    <li>GitHub Username-</li>
-                    <li>LinkedIn Username-</li>
-                    <li><a href="#">Edit Profile</a></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li>Name: {{ user.name or 'N/A' }}</li>
+                    <li>GitHub Username: {{ user.githubusername or 'Not provided' }}</li>
+                    <li>LinkedIn Username: {{ user.linkedinusername or 'Not provided' }}</li>
+                    <li><a href="/client/edit">Edit Profile</a></li>
+                    <li><a href="/logout">Log Out</a></li>
                   </div>
             </button>
         </div>

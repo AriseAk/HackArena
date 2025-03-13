@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Junge&display=swap');
+
+body{
+    padding:0;
+    margin:0;
+    background-color: #A3ADCB;
+}
+
+.form-control{
+    border-radius: 8px;
+    border:none;
+}
+
+.logo {
+    height: 6vh;
+    background-color: #6e7385;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.logo-dp {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 0px;
+    font-size: 23px;
+    font-family: "Junge", cursive;
+}
+
+.line{
+    width:60vw;
+    background-color:white;
+    height:2px;
+}
+
+.space {
+    height: 10vh;
+}
+
+.border {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5vw;
+    padding-left: 2vw;
+}
+
+.innerbox {
+    background-color: #5f6579;
+    height: 35vh;
+    width: 28vw;
+    border-radius: 20px;
+    padding: 4px;
+    /* position: fixed; */
+}
+
+.header {
+    height: 45vh;
+    width: 28vw;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 11vh;
+    position: relative;
+    top: 35vh;
+    right: -2vw;
+}
+
+.border {
+    height: 20vh;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.details {
+    padding: 4px;
+    font-size: larger;
+}
+
+.space2 {
+    height: 1.5vh;
+}
+
+.space3{
+    width:20vh;
+}
+
+.longerbox {
+    background-color: #5f6579;
+    height: 10vh;
+    width: 75vw;
+    border-radius: 20px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.border2{
+    height: 42vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerlongerbox {
+    background-color:#A3ADCB;
+    height: 8vh;
+    width: 25vw;
+    border-radius: 20px;
+    padding: 4px;
+    border:none;
+}
+
+.innerlongerbox:hover{
+    cursor: pointer;
+}
+
+.header {
+    height: 45vh;
+    width: 28vw;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 11vh;
+    position: relative;
+    top: 35vh;
+    right: -2vw;
+}
+
+.smallerbox {
+    background-color: #5f6579;
+    width: 60px;
+    height: 60px; 
+}
+
+
+.border3{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap:5vw;
+    flex-direction: row;
+    padding-left: 2vw;
+}
+
+.longerbox2{
+    background-color: #5f6579;
+    height: 5vh;
+    width: 35vw;
+    border-radius: 20px;
+    padding: 2vw;
+    display:flex;
+    justify-content: left;
+    align-items: center;
+    gap:2vw;
+}
+
+.border4{
+    display: flex;
+    justify-content:center;
+    gap:25vw;
+    align-items: center;
+    padding:2vw;
+}
+
+.subgroup{
+    display:flex;
+    gap:2vw;
+}
+
+.det{
+    color:white;
+}
+
+.smallerbox > img{
+    object-fit: contain;
+    width: 100%; 
+    height: 100%;
+}
+
+.sub{
+    background-color: #5f6579;
+    border:none;
+    padding:10px;
+    border-radius: 25px;
+    color:white;
+}
+
+.sub:hover{
+    cursor: pointer;
+}

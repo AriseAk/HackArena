@@ -9,38 +9,46 @@
 </head>
 
 <body>
-    <div class="space"></div>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
+    </div>
+
     <div class="border">
         <div class="login">
             <div class="header">Register</div>
-            <div class="innerbox">
-                <div class="details">Username</div>
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto enter" name="username"
-                        placeholder="Enter your username" type="text" required>
+            <form action="/register" method="post">
+                <div class="innerbox">
+                    <div class="details">Username</div>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto enter" name="username"
+                            placeholder="Enter your username" type="text" required>
+                    </div>
+                    <div class="space2"></div>
+                    <div class="details">Password</div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto enter" name="password" placeholder="Password"
+                            type="password" required>
+                    </div>
+                    <div class="space2"></div>
+                    <div class="details">Confirm Password</div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto enter" name="confirm" placeholder="Confirm Password"
+                            type="password" required>
+                    </div>
+                    <div class="space2"></div>
+                    <div class="details">Company Name</div>
+                    <div class="mb-3">
+                        <input class="form-control mx-auto w-auto enter" name="companme" placeholder="Company Name"
+                            type="text" required>
+                    </div>
                 </div>
-                <div class="space2"></div>
-                <div class="details">Password</div>
-                <div class="mb-3">
-                    <input class="form-control mx-auto w-auto enter" name="password" placeholder="Password"
-                        type="password" required>
+
+                <div class="submit">
+                    <button class="primary" type="submit">Submit</button>
                 </div>
-                <div class="space2"></div>
-                <div class="details">Confirm Password</div>
-                <div class="mb-3">
-                    <input class="form-control mx-auto w-auto enter" name="confirm" placeholder="Confirm Password"
-                        type="password" required>
-                </div>
-                <div class="space2"></div>
-                <div class="details">Company Name</div>
-                <div class="mb-3">
-                    <input class="form-control mx-auto w-auto enter" name="companme" placeholder="Company Name"
-                        type="text" required>
-                </div>
-            </div>
-            <div class="submit">
-                <button class="primary" type="submit">Submit</button>
-            </div>
+            </form>
         </div>
     </div>
     <div class="space1"></div>
@@ -50,16 +58,12 @@
         <div class="dropdown">
             <button class="dropbtn">
                 <img src="/static/assets/360_F_518093233_bYlgthr8ZLyAUQ3WryFSSSn3ruFJLZHM 1.png" alt="Google Logo">
-                <a href="{{ url_for('google_login') }}">Sign in with Google</a>
+                <a href="{{ url_for('hgoogle_login') }}">Sign in with Google</a>
             </button>
             <div class="dropdown-content">
                 <div class="dropdown-item">
                     <img src="/static/assets/github1.png" alt="Github Logo">
-                    <a href="{{ url_for('github_login') }}">Continue with Github</a>
-                </div>
-                <div class="dropdown-item">
-                    <img src="/static/assets/linkedin.png" alt="LinkedIn Logo">
-                    <a href="#">Continue with LinkedIn</a>
+                    <a href="{{ url_for('hgithub_login') }}">Continue with Github</a>
                 </div>
             </div>
         </div>
@@ -68,7 +72,7 @@
     <div class="bottom">
         <span>Already have an Account?</span>
         <a href="/loghost">Login</a>
-    </div>    
+    </div>
 </body>
 
 </html>
