@@ -1,17 +1,3 @@
-# import os
-# import io
-# from flask import Flask, redirect, url_for, session, request, jsonify, render_template
-# from authlib.integrations.flask_client import OAuth
-# from dotenv import load_dotenv
-# from flask import Flask, render_template, request, redirect, url_for, flash
-# from werkzeug.utils import secure_filename
-# from flask import send_from_directory
-# from flask import Flask, request, render_template, redirect, url_for, flash, send_file
-# from pymongo import MongoClient
-# import gridfs
-# from bson.objectid import ObjectId
-# from io import BytesIO
-# from flask import request, send_file
 import os
 import io
 from flask import Flask, redirect, url_for, session, request, jsonify, render_template, flash, send_file
@@ -19,11 +5,11 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 from pymongo import MongoClient
-from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from pymongo.errors import DuplicateKeyError
 import gridfs
 from bson.objectid import ObjectId
+from datetime import datetime, timezone
 
 
 load_dotenv()  
@@ -52,6 +38,8 @@ fs = gridfs.GridFS(fu)
 db = client['userinfo']
 collection = db['users']
 hosts=db['hosts']
+hi = client['hackinfo']
+hic = hi['hackathoninfo'] #Hackathon information client
 
 collection.create_index("username", unique=True)
 hosts.create_index("username", unique=True)
@@ -97,8 +85,8 @@ def login_page():
                 session['username'] = username
                 session['client'] = {
                     'name': user.get('name'),
-                    'githubusername': user.get('githubusername'),
-                    'linkedinusername': user.get('linkedinusername')
+                    'gitusername': user.get('gitusername'),
+                    'email': user.get('email')
                 }
                 return redirect('/clienthome')  # Redirect to the dashboard or desired page
             else:
@@ -180,8 +168,8 @@ def loghost_page():
                 session['username'] = username
                 session['host'] = {
                     'name': host.get('name'),
-                    'githubusername': host.get('githubusername'),
-                    'linkedinusername': host.get('linkedinusername'),
+                    'gitusername': host.get('githubusername'),
+                    'email': host.get('email'),
                     'companyname': host.get('companyname')
                 }
                 return redirect('/hosthome')  # Redirect to the dashboard or desired page
@@ -194,16 +182,43 @@ def loghost_page():
             return render_template("hostlogin.html")
     else:
         return render_template("hostlogin.html") 
-
-@app.route("/hosthome",methods=["GET","POST"])
+ 
+@app.route("/hosthome", methods=["GET", "POST"])
 def hosthome_page():
     host = session.get('host')
-    return render_template("host-home.html", host=host)  
+    if host:
+        hackathons = hic.find({'username': host['email']})  # Fetch hackathons created by the logged-in host
+        hacks = [
+            {
+                'id': str(hack['_id']),  
+                'title': hack['title'],
+                'date': hack['date'],
+                'duration': hack['duration']
+            }
+            for hack in hackathons
+        ]
+        return render_template("host-home.html", host=host, hacks=hacks)
+    return redirect('/loghost')
 
-@app.route("/clienthome",methods=["GET","POST"])
+@app.route("/clienthome", methods=["GET", "POST"])
 def clienthome_page():
     user = session.get('client')
-    return render_template("index.html", user=user) 
+    if user:
+        today = datetime.now(timezone.utc)
+        hackathons = hic.find({'rdate': {'$gte': today}})
+
+        hacks = [
+            {
+                'id': str(hack['_id']),  # Pass the _id to the template
+                'title': hack.get('title'),
+                'date': hack.get('date'),
+                'duration': hack.get('duration')
+            }
+            for hack in hackathons
+        ]
+
+        return render_template("index.html", user=user, hacks=hacks)
+    return redirect('/login')
 
 @app.route("/client/auth/google")
 def google_login():
@@ -219,7 +234,6 @@ def hgoogle_login():
     redirect_uri = url_for("google_callback" ,_external=True)
     return google.authorize_redirect(redirect_uri)
 
-
 @app.route("/auth/google/callback")
 def google_callback():
     global flag
@@ -233,7 +247,8 @@ def google_callback():
             collection.insert_one({'username': session["user"]['email'],'name':session["user"]['name']})
         session['username'] = session["user"]['email']
         session['client']={
-            'name': session["user"]['name']
+            'name': session["user"]['name'],
+            'email':session["user"]['email']
         }
         return redirect('/clienthome') 
      
@@ -247,7 +262,8 @@ def google_callback():
             hosts.insert_one({'username': session["user"]['email'],'name':session["user"]['name']})
         session['username'] = session["user"]['email']
         session['host']={
-            'name':session["user"]['name']
+            'name':session["user"]['name'],
+            'email':session["user"]['email']
         }
         print("Redirecting to:", url_for('hosthome_page'))
         return redirect('/hosthome')
@@ -284,9 +300,10 @@ def github_callback():
             "email": email,
             "picture": user_info.get("avatar_url"),
         }
-        session['username']=session['user']['name']
+        session['username']=session['user']['email']
         session['client']={
-            'name':session['user']['email']
+            'name':session['user']['name'],
+            'email':session["user"]['email']
         }
         return redirect("/clienthome")
     
@@ -307,9 +324,10 @@ def github_callback():
             "email": email,
             "picture": user_info.get("avatar_url"),
         }
-        session['username']=session['user']['name']
+        session['username']=session['user']['email']
         session['host']={
-            'name':session['user']['email']
+            'name':session['user']['email'],
+            'email':session["user"]['email']
         }
         return redirect("/hosthome")
 
@@ -327,8 +345,8 @@ def edit():
     if request.method == 'POST':
         name = request.form.get("name")
         gitusername = request.form.get("gitusername")
-        linkedinusername = request.form.get("linkedinusername")
-        print(name, gitusername, linkedinusername)
+        email = request.form.get("email")
+        print(name, gitusername, email)
 
         try:
             # Update the existing document using session['username']
@@ -336,14 +354,14 @@ def edit():
                 {"username": session['username']},
                 {"$set": {
                     'name': name,
-                    'githubusername': gitusername,
-                    'linkedinusername': linkedinusername
+                    'gitusername': gitusername,
+                    'email': email
                 }}
             )
             session['client'] = {
                 'name': name,
-                'githubusername': gitusername,
-                'linkedinusername': linkedinusername
+                'gitusername': gitusername,
+                'email': email
             }
             flash("Profile updated successfully!")
             return redirect('/clienthome')
@@ -365,9 +383,9 @@ def hedit():
     if request.method == 'POST':
         name = request.form.get("name")
         gitusername = request.form.get("gitusername")
-        linkedinusername = request.form.get("linkedinusername")
+        email = request.form.get("email")
         compname = request.form.get("compname")
-        print(name, gitusername, linkedinusername, compname)
+        print(name, gitusername, email, compname)
 
         # try:
             # Update the existing host document using session['username']
@@ -375,25 +393,21 @@ def hedit():
             {"username": session['username']},
             {"$set": {
                 'name': name,
-                'githubusername': gitusername,
-                'linkedinusername': linkedinusername,
+                'gitusername': gitusername,
+                'email': email,
                 'companyname': compname
             }}
         )
         session['host'] = {
                 'name': name,
-                'githubusername': gitusername,
-                'linkedinusername': linkedinusername,
+                'gitusername': gitusername,
+                'email': email,
                 'companyname': compname
             }
         flash("Host profile updated successfully!")
         return redirect('/hosthome')
-        # except Exception as e:
-        #     flash("An error occurred: " + str(e))
-        #     return render_template("hedit.html")
-
+    
     else:
-        # Pre-fill existing data if available
         host = hosts.find_one({"username": session['username']})
         return render_template("hedit.html")
 
@@ -454,6 +468,54 @@ def serve_file(file_id):
         mimetype=file.content_type, 
         download_name=file.filename 
     )
+
+@app.route("/host/add/hack", methods=["POST", "GET"])
+def addhack():
+    if request.method == 'POST':
+        title = request.form.get("title")
+        mode = request.form.get("mode")
+        date = request.form.get("date")
+        duration = request.form.get("duration")
+        teamsize = request.form.get("team-size")
+        rdate = request.form.get("rdate")
+        prize = request.form.get("prize")
+        username = session['host']['email']
+
+        hic.insert_one({
+            'username': username, 
+            'title': title,
+            'mode': mode,
+            'date': date,
+            'duration': duration,
+            'team-size': teamsize,
+            'rdate': datetime.strptime(rdate, '%Y-%m-%d'), # Ensure rdate is stored as datetime
+            'prize': prize
+        })
+
+        return redirect('/hosthome')
+    else:
+        return render_template("hackathon-details.html")
+    
+@app.route("/hackathon/<hack_id>", methods=["GET", "POST"])
+def hackathon_details(hack_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+
+    # Calculate days remaining
+    today = datetime.now(timezone.utc)
+    rdate = hack.get('rdate')
+    today = today.replace(tzinfo=None)
+    days_remaining = (rdate - today).days if rdate else None
+    return render_template("hackathon-user.html", hack=hack, days_remaining=days_remaining)
+
+@app.route("/hackathon/<hack_id>/reg", methods=["GET", "POST"])
+def team_reg(hack_id):
+    if request.method=="POST":
+        return redirect("/clienthome")
+    else:
+        return render_template("teams.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
