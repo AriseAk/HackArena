@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Junge&display=swap');
+
+body {
+    background-color: #A3ADCB;
+    font-family: "Junge", cursive;
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    height: 6vh;
+    background-color: #6e7385;
+    color: white;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.logo-dp {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 0px;
+    font-size: 23px;
+    font-family: "Junge", cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    width: 36vw;
+    background-color: #6e7385;
+    border-radius: 10px;
+}
+
+.space1 {
+    height: 3vh;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+}
+
+.team-name {
+    background-color: #A3ADCB;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+
+input {
+    background-color: #A3ADCB;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+label {
+    font-size: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.rules-btn,
+.submit-btn {
+    width: 30%;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #A3ADCB;
+    border: 2px solid black;
+    border-radius: 5px;
+}

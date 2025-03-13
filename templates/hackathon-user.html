@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hackathon Details</title>
+    <title>{{ hack.title }}</title>
     <link rel="stylesheet" href="/static/details.css">
 </head>
 
@@ -18,19 +18,19 @@
     <div class="border">
         <div class="innerbox"></div>
         <div class="container">
-            <div class="details">Event Title:</div>
+            <div class="details">Event Title: {{ hack.title }}</div>
             <div class="space2"></div>
             <div class="line"></div>
             <div class="space2"></div>
-            <div class="details">Mode: </div>
+            <div class="details">Mode: {{ hack.mode }}</div>
             <div class="space2"></div>
             <div class="line"></div>
             <div class="space2"></div>
-            <div class="details">Date: </div>
+            <div class="details">Date: {{ hack.date }}</div>
             <div class="space2"></div>
             <div class="line"></div>
             <div class="space2"></div>
-            <div class="details">Duration: </div>
+            <div class="details">Duration: {{ hack.duration }}hrs</div>
             <div class="space2"></div>
             <div class="line"></div>
         </div>
@@ -38,7 +38,13 @@
     <div class="space"></div>
     <div class="border2">
         <div class="longerbox">
-            <button class="innerlongerbox">Register </button>
+            <button class="innerlongerbox profile">Register
+                <img src="/static/assets/dropdown.svg" alt="">
+                <div class="dropdown-content">
+                    <li><a href="#">Looking For a Team</a></li>
+                    <li><a href="/hackathon/<hack_id>/reg">Already Have a Team</a></li>
+                  </div>
+            </button>
         </div>
     </div>
     <div class="border3">
@@ -51,20 +57,27 @@
         <div class="subgroup">
             <div class="smallerbox"><img src="/static/assets/user.svg" alt=""></div>
             <div class="group">
-                <div class="details">Team-size: </div>
+                <div class="details">Team-size: {{ hack['team-size'] }}</div>
             </div>
         </div>
         <div class="subgroup">
             <div class="smallerbox"><img src="/static/assets/clock.svg" alt=""></div>
             <div class="group">
-                <div class="details">Date: </div>
+                <div class="details">
+                    Days Remaining:
+                    {% if days_remaining != None %}
+                        {{ days_remaining }} days
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
     <div class="space"></div>
     <div class="border4">
         <div class="longerbox2">
-            <div class="det">Prize-Pool: </div>
+            <div class="det">Prize-Pool: ₹{{ hack.prize }}</div>
         </div>
     </div>
 </body>
