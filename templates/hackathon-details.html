@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Details</title>
+    <link rel="stylesheet" href="/static/details.css">
+</head>
+
+<body>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="border">
+        <div class="innerbox"></div>
+        <div class="container">
+            <div class="details">Event Title:</div>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto enter" name="Title"
+                    placeholder="Enter Title" type="text" required>
+            </div>
+            <div class="space2"></div>
+            <div class="line"></div>
+            <div class="space2"></div>
+            <div class="details">Mode: </div>
+            <div class="mb-3">
+                <select class="form-control mx-auto w-auto enter" name="mode" required>
+                    <option value="" disabled selected>Select Mode</option>
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </div>
+            <div class="space2"></div>
+            <div class="line"></div>
+            <div class="space2"></div>
+            <div class="details">Date: </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto enter" name="date" placeholder="Date" type="date" required>
+            </div>
+            <div class="space2"></div>
+            <div class="line"></div>
+            <div class="space2"></div>
+            <div class="details">Duration: </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto enter" name="duration" placeholder="Duration" type="number"
+                    required>&nbsp;Hrs
+            </div>
+            <div class="space2"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="border3">
+        <div class="subgroup">
+            <div class="smallerbox"><img src="/static/assets/tick.svg" alt=""></div>
+            <div class="group">
+                <div class="details">Registered: </div>
+                <div class="mb-3">
+                    <input class="form-control mx-auto w-auto enter" name="Reg" placeholder="Number" type="number"
+                        required>
+                </div>
+            </div>
+        </div>
+        <div class="subgroup">
+            <div class="smallerbox"><img src="/static/assets/user.svg" alt=""></div>
+            <div class="group">
+                <div class="details">Team-size: </div>
+                <div class="mb-3">
+                    <input class="form-control mx-auto w-auto enter" name="team-size" placeholder="Size" type="number"
+                        required>
+                </div>
+            </div>
+        </div>
+        <div class="subgroup">
+            <div class="smallerbox"><img src="/static/assets/clock.svg" alt=""></div>
+            <div class="group">
+                <div class="details">Date: </div>
+                <div class="mb-3">
+                    <input class="form-control mx-auto w-auto enter" name="dates" placeholder="Date" type="date"
+                        required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="border4">
+        <div class="longerbox2">
+            <div class="det">Prize-Pool: </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto enter" name="prize" placeholder="Enter total prize pool" type="number"
+                    required>
+            </div>
+        </div>
+        <button type="submit" class="sub">Save Changes</button>
+    </div>
+</body>
