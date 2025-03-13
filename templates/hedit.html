@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/static/editprofile.css">
+</head>
+
+<body>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="b">Edit Profile</div>
+
+        <form action="/save-profile" method="POST">
+            <div class="h1">Name</div>
+            <div class="iph1">
+                <input type="text" name="name" placeholder="Enter Your Name" required>
+            </div>
+
+            <div class="h1">Company Name</div>
+            <div class="iph1">
+                <input type="text" name="company" placeholder="Enter Your Company Name">
+            </div>
+
+            <div class="h1">Email</div>
+            <div class="iph1">
+                <input type="email" name="email" placeholder="Enter Your Email ID" required>
+            </div>
+
+            <div class="h1">GitHub Username</div>
+            <div class="iph1">
+                <input type="text" name="gitusername" placeholder="Enter Your Username">
+            </div>
+
+            <div class="btn">
+                <button type="button" class="btn1" onclick="window.location.href='/hosthome'">Cancel</button>
+                <button type="submit" class="btn2" onclick="window.location.href='/hosthome'">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
