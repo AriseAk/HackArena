@@ -27,7 +27,7 @@ HackArena is a platform designed to **host and manage hackathons** effortlessly.
 
 ### **1. Clone the Repository**  
 ```bash
-git clone https://github.com/AriseAk/HackArena-Deploy.git
+git clone https://github.com/AriseAk/HackArena.git
 cd hackarena
 ```
 
