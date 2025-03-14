@@ -1,0 +1,6 @@
+Flask==3.0.2
+authlib==1.2.1
+python-dotenv==1.0.1
+pymongo==4.6.1
+werkzeug==3.0.2
+python-slugify==8.0.4

@@ -244,11 +244,10 @@ body {
 
 .choose {
     background-color: #6e7385;
-    ;
     font-family: "Junge", cursive;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: center
 }
 
 .files {
@@ -266,6 +265,11 @@ body {
     border: 2px solid black;
     border-radius: 5px;
     cursor: pointer;
+    color: #000000;
+}
+
+.files1::placeholder {
+    color: rgb(0, 0, 0);  
 }
 
 input[type="file"] {
@@ -312,4 +316,69 @@ input[type="file"] {
 .download{
     border: 2px solid black;
     text-decoration: none;
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.team-card {
+    background-color: #6e7385;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px;
+    transition: transform 0.3s ease-in-out;
+    width: 500px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+    border: 2px solid black;
+
+}
+
+.team-card:hover {
+    transform: scale(1.05);
+}
+
+.team-card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.files-list {
+    display: none;
+    text-align: center;
+}
+
+.team-card:hover .files-list {
+    display: block;
+}
+
+.files-list a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    background-color: #828bab;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    border: 1px solid black;
+}
+
+.files-list a:hover {
+    background-color: #5a6488;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    margin: 20px auto;
 }
