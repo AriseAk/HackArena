@@ -17,44 +17,22 @@
     <div class="space1"></div>
     <div class="box">
         <div class="container">
-            <form action="/hackathon/{{ hack.id }}/reg" method="post">
+            <form action="/hackathon/{{ hack._id }}/reg" method="post">
                 <label for="team-name">Team Name:</label>
                 <input type="text" class="team-name" name="team_name" required>
                 <br>
-                <label for="team-size">Team Size:</label>
-                <input type="number" class="team-size" name="team_size" min="1" max="4" required>
 
+                <!-- Dynamically generate member inputs based on hack.team-size -->
+                {% for i in range(1, hack['team-size']|int + 1) %}
                 <div class="member">
-                    <h3>Member 1</h3>
+                    <h3>Member {{ i }}</h3>
                     <label>Name:</label>
-                    <input type="text" name="member1_name" required>
+                    <input type="text" name="member_name_{{ i }}" {% if i == 1 %}required{% endif %}>
                     <label>Mail-ID:</label>
-                    <input type="email" name="member1_email" required>
+                    <input type="email" name="member_email_{{ i }}" {% if i == 1 %}required{% endif %}>
                 </div>
+                {% endfor %}
 
-                <div class="member">
-                    <h3>Member 2</h3>
-                    <label>Name:</label>
-                    <input type="text" name="member2_name">
-                    <label>Mail-ID:</label>
-                    <input type="email" name="member2_email">
-                </div>
-
-                <div class="member">
-                    <h3>Member 3</h3>
-                    <label>Name:</label>
-                    <input type="text" name="member3_name">
-                    <label>Mail-ID:</label>
-                    <input type="email" name="member3_email">
-                </div>
-
-                <div class="member">
-                    <h3>Member 4</h3>
-                    <label>Name:</label>
-                    <input type="text" name="member4_name">
-                    <label>Mail-ID:</label>
-                    <input type="email" name="member4_email">
-                </div>
                 <div class="button-container">
                     <button type="submit" class="submit-btn">SUBMIT</button>
                 </div>

@@ -42,7 +42,7 @@
                 <img src="/static/assets/dropdown.svg" alt="">
                 <div class="dropdown-content">
                     <li><a href="#">Looking For a Team</a></li>
-                    <li><a href="/hackathon/<hack_id>/reg">Already Have a Team</a></li>
+                    <li><a href="/hackathon/{{hack._id}}/reg">Already Have a Team</a></li>
                   </div>
             </button>
         </div>
@@ -51,7 +51,7 @@
         <div class="subgroup">
             <div class="smallerbox"><img src="/static/assets/tick.svg" alt=""></div>
             <div class="group">
-                <div class="details">Registered: </div>
+                <div class="details">Registered: {{ reg }}</div>
             </div>
         </div>
         <div class="subgroup">
