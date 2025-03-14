@@ -44,25 +44,25 @@ collection.create_index("username", unique=True)
 hosts.create_index("username", unique=True)
 
 google = oauth.register(
-    name='google',
-    client_id='GOOGLE_CLIENT_ID',
-    client_secret='GOOGLE_CLIENT_SECRET',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    redirect_uri='https://hackarena.onrender.com/auth/google/callback',
-    client_kwargs={'scope': 'openid email profile'}
+    name="google",
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    authorize_url="https://accounts.google.com/o/oauth2/auth",
+    access_token_url="https://oauth2.googleapis.com/token",
+    userinfo_endpoint="https://www.googleapis.com/oauth2/v3/userinfo",
+    client_kwargs={"scope": "openid email profile"},
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
 )
 
 github = oauth.register(
-    name='github',
-    client_id='GITHUB_CLIENT_ID',
-    client_secret='GITHUB_CLIENT_SECRET',
-    authorize_url='https://github.com/login/oauth/authorize',
-    access_token_url='https://github.com/login/oauth/access_token',
-    redirect_uri='https://hackarena.onrender.com/auth/github/callback',
-    client_kwargs={'scope': 'user:email'}
+    name="github",
+    client_id=os.getenv("GITHUB_CLIENT_ID"),
+    client_secret=os.getenv("GITHUB_CLIENT_SECRET"),
+    authorize_url="https://github.com/login/oauth/authorize",
+    access_token_url="https://github.com/login/oauth/access_token",
+    api_base_url="https://api.github.com/",
+    client_kwargs={"scope": "user:email"},
 )
-
 
 @app.route("/")
 def home():
