@@ -1,13 +1,11 @@
 import os
 import io
-from flask import Flask, redirect, url_for, session, request, jsonify, render_template, flash, send_file
+from flask import Flask, redirect, url_for, session, request, render_template, flash, send_file, url_for
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
-from werkzeug.utils import secure_filename
 from pymongo import MongoClient
 from werkzeug.security import check_password_hash, generate_password_hash
 from pymongo.errors import DuplicateKeyError
-import gridfs
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
 from slugify import slugify
@@ -15,11 +13,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from bson import ObjectId
-from flask import flash, redirect, render_template, request, url_for, send_file
 from gridfs import GridFSBucket
 import io
 
-        
 load_dotenv()  
 
 flag=False
@@ -32,23 +28,18 @@ ALLOWED_EXTENSIONS = {"py", "txt", "cpp", "java"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 
 
-
 app.secret_key = os.getenv("SECRET_KEY")  
-print(f"Secret Key: {app.secret_key}")
 
 oauth = OAuth(app)
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 client = MongoClient(os.getenv("MONGO_CLIENT"))
-# fu = client["file_uploads_db"]  # Database
-# fs = gridfs.GridFS(fu)
 db = client['userinfo']
 collection = db['users']
 hosts=db['hosts']
 hi = client['hackinfo']
 hic = hi['hackathoninfo'] #Hackathon information client
-
 collection.create_index("username", unique=True)
 hosts.create_index("username", unique=True)
 
@@ -72,7 +63,6 @@ github = oauth.register(
     api_base_url="https://api.github.com/",
     client_kwargs={"scope": "user:email"},
 )
-
 
 @app.route("/")
 def home():
@@ -467,7 +457,6 @@ def list_files(hack_id,teamname):
         {"filename": f['filename'], "id": str(f['_id'])} for f in files
     ])
 
-
 @app.route("/hackathon/<hack_id>/<teamname>/<file_id>")
 def serve_file(hack_id, teamname, file_id):
     hack = hic.find_one({'_id': ObjectId(hack_id)})
@@ -493,92 +482,14 @@ def hlist_files(hack_id):
         return redirect('/clienthome')
 
     add = client[slugify(hack['title'])]
-
     # Get all team collections under the database
     team_names = [col.replace(".files", "") for col in add.list_collection_names() if col.endswith(".files")]
-
     team_files = {}
-
     for team in team_names:
         bucket = GridFSBucket(add, bucket_name=team)
         files = add[f"{team}.files"].find()
         team_files[team] = [{"filename": f["filename"], "id": str(f["_id"])} for f in files]
-
     return render_template("hfiles.html", hack=hack, team_files=team_files)
-
-
-# def allowed_file(filename):
-#     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# @app.route("/hackathon/<hack_id>/upload", methods=["GET", "POST"])
-# def upload_file(hack_id):
-#     if request.method == "POST":
-#         hack = hic.find_one({'_id': ObjectId(hack_id)})
-#         if "file" not in request.files:
-#             flash("No file part")
-#             return redirect(request.url)
-        
-#         teamname=request.form.get('teamname')
-#         file = request.files["file"]
-#         if file.filename == "":
-#             flash("No selected file")
-#             return redirect(request.url)
-        
-#         add = client[slugify(hack['title'])]
-#         fu = add[slugify(teamname)]
-#         fs = gridfs.GridFS(fu)
-#         # Save file to MongoDB GridFS
-#         file_id = fs.put(file.read(), filename=file.filename)
-
-#         flash(f"File '{file.filename}' uploaded successfully!")
-#         return redirect(url_for("list_files"))
-#     else:
-#         hack = hic.find_one({'_id': ObjectId(hack_id)})
-#         return render_template("upload.html",hack=hack)
-
-# @app.route("/hackathon/<hack_id>/files")
-# def list_files(hack_id):
-#     hack = hic.find_one({'_id': ObjectId(hack_id)})
-#     teamname=request.form.get('teamname')
-#     add = client[slugify(hack['title'])]
-#     fu = add[slugify(teamname)]
-#     fs = gridfs.GridFS(fu)
-#     files = fs.find()
-#     return render_template("files.html", hack=hack,files=[{"filename": f.filename, "id": str(f._id)} for f in files])
-
-# # @app.route("/file/<file_id>")
-# # def serve_file(file_id):
-# #     """Serve a file with an option to view or download."""
-# #     file = fs.get(ObjectId(file_id))  # Retrieve file from MongoDB GridFS
-# #     file_data = file.read()
-# #     mimetype = file.content_type or "application/octet-stream"
-
-# #     if request.args.get("download") == "true":
-# #         return send_file(
-# #             io.BytesIO(file_data),
-# #             mimetype=mimetype,
-# #             as_attachment=True,  # Forces download
-# #             download_name=file.filename
-# #         )
-
-# #     return send_file(
-# #         io.BytesIO(file_data),
-# #         mimetype=mimetype,  # Open in browser if supported
-# #         download_name=file.filename
-# #     )
-
-# @app.route("/hackathon/<hack_id>/<teamname>/<file_id>")
-# def serve_file(hack_id,teamname,file_id):
-#     hack = hic.find_one({'_id': ObjectId(hack_id)})
-#     add = client[slugify(hack['title'])]
-#     fu = add[slugify(teamname)]
-#     fs = gridfs.GridFS(fu)
-#     file = fs.get(ObjectId(file_id))  
-#     return send_file(
-#         io.BytesIO(file.read()),
-#         mimetype=file.content_type, 
-#         download_name=file.filename 
-#     )
 
 @app.route("/host/add/hack", methods=["POST", "GET"])
 def addhack():
@@ -602,7 +513,6 @@ def addhack():
             'rdate': datetime.strptime(rdate, '%Y-%m-%d'), # Ensure rdate is stored as datetime
             'prize': prize
         })
-
         return redirect('/hosthome')
     else:
         return render_template("hackathon-details.html")
@@ -725,9 +635,7 @@ def send(hack_id,sender):
     SMTP_PORT = 587
     SENDER_EMAIL = os.getenv("EMAIL_USER")  # Your email (set in .env)
     SENDER_PASSWORD = os.getenv("EMAIL_PASSWORD")  # Your app password (set in .env)
-
     subject = "Hackathon Team Request Notification"
-    
     # Message to sender (sending recipient's details)
     body_to_sender = f"""
 Hi {sname},
@@ -753,7 +661,6 @@ Here are their details:
 
 Good luck!
     """
-
     # Send email to sender
     send_email(SENDER_EMAIL, SENDER_PASSWORD, SMTP_SERVER, SMTP_PORT, semail, subject, body_to_sender)
     
@@ -763,9 +670,6 @@ Good luck!
     flash("Emails sent successfully!")
     return redirect(url_for('find', hack_id=hack_id))
 
-    # except Exception as e:
-    #     flash(f"An error occurred: {str(e)}")
-    #     return redirect('/clienthome')
 
 # Function to send an email
 def send_email(sender_email, sender_password, smtp_server, smtp_port, recipient_email, subject, body):
