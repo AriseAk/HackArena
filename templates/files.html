@@ -11,26 +11,20 @@
 <body>
     <div class="space">
         <div class="logo">
-            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+            <button class="logo-dp" onclick="window.location.href='/clienthome'">HackArena</button>
         </div>
     </div>
-
+    <!-- <form class="choose" action="/hackathon/{{hack._id}}/files" method="post" enctype="multipart/form-data">
+        <input type="text" placeholder="Enter team Name" name="teamname">
+        <input class="files1" type="submit" value="Submit">
+    </form> -->
     <h2 class="heading">Uploaded Files</h2>
 
     <div class="flash-messages">
-        <!-- <ul>
-            {% for file in files %}
-            <li>
-                {{ file.filename }}  
-                <a class="download" href="{{ url_for('serve_file', file_id=file.id) }}" target="_blank">View</a> |  
-                <a class="download" href="{{ url_for('serve_file', file_id=file.id, download='true') }}">Download</a>
-            </li>
-            {% endfor %}
-        </ul> -->
         <ul>
             {% for file in files %}
                 <li>
-                    <a href="{{ url_for('serve_file', file_id=file.id) }}" target="_blank">{{ file.filename }}</a>
+                    <a href="{{ url_for('serve_file', hack_id=hack._id, teamname=teamname, file_id=file.id) }}" target="_blank">{{ file.filename }}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -38,9 +32,9 @@
     </div>
 
     <br>
-    <a class="heading" href="/">Go Back Home</a>
+    <a class="heading" href="/clienthome">Go Back Home</a>
     <br>
-    <a class="heading" href="/upload">Need to Upload more files?</a>
+    <a class="heading" href="/hackathon/{{hack._id}}/upload">Add more files</a>
 </body>
 
 </html>

@@ -11,6 +11,13 @@ import gridfs
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
 from slugify import slugify
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from bson import ObjectId
+from flask import flash, redirect, render_template, request, url_for, send_file
+from gridfs import GridFSBucket
+import io
 
 
 load_dotenv()  
@@ -34,8 +41,8 @@ oauth = OAuth(app)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 client = MongoClient(os.getenv("MONGO_CLIENT"))
-fu = client["file_uploads_db"]  # Database
-fs = gridfs.GridFS(fu)
+# fu = client["file_uploads_db"]  # Database
+# fs = gridfs.GridFS(fu)
 db = client['userinfo']
 collection = db['users']
 hosts=db['hosts']
@@ -412,63 +419,166 @@ def hedit():
         host = hosts.find_one({"username": session['username']})
         return render_template("hedit.html")
 
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route("/upload", methods=["GET", "POST"])
-def upload_file():
+@app.route("/hackathon/<hack_id>/upload", methods=["GET", "POST"])
+def upload_file(hack_id):
     if request.method == "POST":
+        hack = hic.find_one({'_id': ObjectId(hack_id)})
+        if not hack:
+            flash("Hackathon not found!")
+            return redirect('/clienthome')
+
         if "file" not in request.files:
             flash("No file part")
             return redirect(request.url)
         
+        teamname = request.form.get('teamname')
         file = request.files["file"]
         if file.filename == "":
             flash("No selected file")
             return redirect(request.url)
+        
+        add = client[slugify(hack['title'])]  # Database
+        bucket = GridFSBucket(add, bucket_name=slugify(teamname))  # Use collection as bucket name
 
-        # Save file to MongoDB GridFS
-        file_id = fs.put(file.read(), filename=file.filename)
+        # Save file to GridFSBucket
+        file_id = bucket.upload_from_stream(file.filename, file)
 
         flash(f"File '{file.filename}' uploaded successfully!")
-        return redirect(url_for("list_files"))
+        return redirect(url_for("list_files", hack_id=hack_id, teamname=teamname))
+    else:
+        hack = hic.find_one({'_id': ObjectId(hack_id)})
+        return render_template("upload.html", hack=hack)
 
-    return render_template("upload.html")
+@app.route("/hackathon/<hack_id>/<teamname>/files",methods=['POST','GET'])
+def list_files(hack_id,teamname):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    # teamname = request.args.get('teamname')
+    if not teamname:
+        flash("Teamname is required!")
+        return redirect(url_for('upload_file', hack_id=hack_id))
 
-@app.route("/files")
-def list_files():
-    files = fs.find()
-    return render_template("files.html", files=[{"filename": f.filename, "id": str(f._id)} for f in files])
+    add = client[slugify(hack['title'])]
+    bucket = GridFSBucket(add, bucket_name=slugify(teamname))
 
-# @app.route("/file/<file_id>")
-# def serve_file(file_id):
-#     """Serve a file with an option to view or download."""
-#     file = fs.get(ObjectId(file_id))  # Retrieve file from MongoDB GridFS
-#     file_data = file.read()
-#     mimetype = file.content_type or "application/octet-stream"
+    # List files using .find()
+    files = add[f"{slugify(teamname)}.files"].find()
 
-#     if request.args.get("download") == "true":
-#         return send_file(
-#             io.BytesIO(file_data),
-#             mimetype=mimetype,
-#             as_attachment=True,  # Forces download
-#             download_name=file.filename
-#         )
+    return render_template("files.html", hack=hack, teamname=teamname, files=[
+        {"filename": f['filename'], "id": str(f['_id'])} for f in files
+    ])
 
-#     return send_file(
-#         io.BytesIO(file_data),
-#         mimetype=mimetype,  # Open in browser if supported
-#         download_name=file.filename
-#     )
 
-@app.route("/file/<file_id>")
-def serve_file(file_id):
-    file = fs.get(ObjectId(file_id))  
+@app.route("/hackathon/<hack_id>/<teamname>/<file_id>")
+def serve_file(hack_id, teamname, file_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+
+    add = client[slugify(hack['title'])]
+    bucket = GridFSBucket(add, bucket_name=slugify(teamname))
+
+    file = bucket.open_download_stream(ObjectId(file_id))
     return send_file(
         io.BytesIO(file.read()),
-        mimetype=file.content_type, 
-        download_name=file.filename 
+        mimetype=file.content_type if hasattr(file, 'content_type') else 'application/octet-stream',
+        download_name=file.filename
     )
+
+@app.route("/host/<hack_id>/files", methods=["POST", "GET"])
+def hlist_files(hack_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+
+    add = client[slugify(hack['title'])]
+
+    # Get all team collections under the database
+    team_names = [col.replace(".files", "") for col in add.list_collection_names() if col.endswith(".files")]
+
+    team_files = {}
+
+    for team in team_names:
+        bucket = GridFSBucket(add, bucket_name=team)
+        files = add[f"{team}.files"].find()
+        team_files[team] = [{"filename": f["filename"], "id": str(f["_id"])} for f in files]
+
+    return render_template("hfiles.html", hack=hack, team_files=team_files)
+
+
+# def allowed_file(filename):
+#     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# @app.route("/hackathon/<hack_id>/upload", methods=["GET", "POST"])
+# def upload_file(hack_id):
+#     if request.method == "POST":
+#         hack = hic.find_one({'_id': ObjectId(hack_id)})
+#         if "file" not in request.files:
+#             flash("No file part")
+#             return redirect(request.url)
+        
+#         teamname=request.form.get('teamname')
+#         file = request.files["file"]
+#         if file.filename == "":
+#             flash("No selected file")
+#             return redirect(request.url)
+        
+#         add = client[slugify(hack['title'])]
+#         fu = add[slugify(teamname)]
+#         fs = gridfs.GridFS(fu)
+#         # Save file to MongoDB GridFS
+#         file_id = fs.put(file.read(), filename=file.filename)
+
+#         flash(f"File '{file.filename}' uploaded successfully!")
+#         return redirect(url_for("list_files"))
+#     else:
+#         hack = hic.find_one({'_id': ObjectId(hack_id)})
+#         return render_template("upload.html",hack=hack)
+
+# @app.route("/hackathon/<hack_id>/files")
+# def list_files(hack_id):
+#     hack = hic.find_one({'_id': ObjectId(hack_id)})
+#     teamname=request.form.get('teamname')
+#     add = client[slugify(hack['title'])]
+#     fu = add[slugify(teamname)]
+#     fs = gridfs.GridFS(fu)
+#     files = fs.find()
+#     return render_template("files.html", hack=hack,files=[{"filename": f.filename, "id": str(f._id)} for f in files])
+
+# # @app.route("/file/<file_id>")
+# # def serve_file(file_id):
+# #     """Serve a file with an option to view or download."""
+# #     file = fs.get(ObjectId(file_id))  # Retrieve file from MongoDB GridFS
+# #     file_data = file.read()
+# #     mimetype = file.content_type or "application/octet-stream"
+
+# #     if request.args.get("download") == "true":
+# #         return send_file(
+# #             io.BytesIO(file_data),
+# #             mimetype=mimetype,
+# #             as_attachment=True,  # Forces download
+# #             download_name=file.filename
+# #         )
+
+# #     return send_file(
+# #         io.BytesIO(file_data),
+# #         mimetype=mimetype,  # Open in browser if supported
+# #         download_name=file.filename
+# #     )
+
+# @app.route("/hackathon/<hack_id>/<teamname>/<file_id>")
+# def serve_file(hack_id,teamname,file_id):
+#     hack = hic.find_one({'_id': ObjectId(hack_id)})
+#     add = client[slugify(hack['title'])]
+#     fu = add[slugify(teamname)]
+#     fs = gridfs.GridFS(fu)
+#     file = fs.get(ObjectId(file_id))  
+#     return send_file(
+#         io.BytesIO(file.read()),
+#         mimetype=file.content_type, 
+#         download_name=file.filename 
+#     )
 
 @app.route("/host/add/hack", methods=["POST", "GET"])
 def addhack():
@@ -514,6 +624,23 @@ def hackathon_details(hack_id):
     hack['_id'] = str(hack['_id'])
     return render_template("hackathon-user.html", hack=hack, days_remaining=days_remaining,reg=reg)
 
+@app.route('/host/<hack_id>', methods=["GET", "POST"])
+def hhackathon_details(hack_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/hosthome')
+    reg=0
+    add = client[slugify(hack['title'])]
+    helper = add['hackinfo']
+    reg=helper.count_documents({})*int(hack['team-size'])
+    today = datetime.now(timezone.utc)
+    rdate = hack.get('rdate')
+    today = today.replace(tzinfo=None)
+    days_remaining = (rdate - today).days if rdate else None
+    hack['_id'] = str(hack['_id'])
+    return render_template("host-details.html", hack=hack, days_remaining=days_remaining,reg=reg)
+
 @app.route("/hackathon/<hack_id>/reg", methods=["GET", "POST"])
 def team_reg(hack_id):
     if request.method == "POST":
@@ -543,12 +670,117 @@ def team_reg(hack_id):
                     }
                 }}
             )
-        
         return redirect("/clienthome")
     else:
         hack = hic.find_one({'_id': ObjectId(hack_id)})
         return render_template("teams.html",hack=hack)
 
+@app.route("/hackathon/<hack_id>/find", methods=["GET", "POST"])
+def find_team(hack_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+    add = client[slugify(hack['title'])]
+    helper = add['findingteam']
+    helper.insert_one({'username':session['username']})
+    return redirect(url_for('find', hack_id=hack_id))
+
+@app.route("/hackathon/<hack_id>/team", methods=["GET", "POST"])
+def find(hack_id):
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+    add = client[slugify(hack['title'])]
+    helper = add['findingteam']
+    name=request.form.get("name")
+    about=request.form.get("about")
+    helper.update_one(
+                {"username": session['username']},
+                {"$set": {
+                    'name':name,
+                    'about':about,
+                    'email':session['client']['email']
+                }}
+            )
+    people=helper.find({"username": {"$ne": session['username']}})
+    return render_template("find.html",hack=hack,people=people)
+
+@app.route("/<hack_id>/<sender>/email", methods=["GET", "POST"])
+def send(hack_id,sender):
+    # try:
+    hack = hic.find_one({'_id': ObjectId(hack_id)})
+    if not hack:
+        flash("Hackathon not found!")
+        return redirect('/clienthome')
+    add = client[slugify(hack['title'])]
+    helper = add['findingteam']
+    send=helper.find_one({'_id':ObjectId(sender)})
+    semail=send['email']
+    sname=send['name']
+    remail=session['client']['email']
+    rname=session['client']['name']
+    SMTP_SERVER = "smtp.gmail.com"
+    SMTP_PORT = 587
+    SENDER_EMAIL = os.getenv("EMAIL_USER")  # Your email (set in .env)
+    SENDER_PASSWORD = os.getenv("EMAIL_PASSWORD")  # Your app password (set in .env)
+
+    subject = "Hackathon Team Request Notification"
+    
+    # Message to sender (sending recipient's details)
+    body_to_sender = f"""
+Hi {sname},
+
+You have been requested from {rname} for the hackathon '{hack['title']}'.
+
+Here are their details:
+- Name: {rname}
+- Email: {remail}
+
+Good luck!
+    """
+
+    # Message to recipient (sending sender's details)
+    body_to_recipient = f"""
+Hi {rname},
+
+You have sent request to {sname} for the hackathon '{hack['title']}'.
+
+Here are their details:
+- Name: {sname}
+- Email: {semail}
+
+Good luck!
+    """
+
+    # Send email to sender
+    send_email(SENDER_EMAIL, SENDER_PASSWORD, SMTP_SERVER, SMTP_PORT, semail, subject, body_to_sender)
+    
+    # Send email to recipient
+    send_email(SENDER_EMAIL, SENDER_PASSWORD, SMTP_SERVER, SMTP_PORT, remail, subject, body_to_recipient)
+
+    flash("Emails sent successfully!")
+    return redirect(url_for('find', hack_id=hack_id))
+
+    # except Exception as e:
+    #     flash(f"An error occurred: {str(e)}")
+    #     return redirect('/clienthome')
+
+# Function to send an email
+def send_email(sender_email, sender_password, smtp_server, smtp_port, recipient_email, subject, body):
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = recipient_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Connect to the SMTP server
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()  # Upgrade to secure connection
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, recipient_email, msg.as_string())
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -30,15 +30,16 @@
     {% endwith %}
 
 
-    <form class="choose" action="/upload" method="post" enctype="multipart/form-data">
+    <form class="choose" action="/hackathon/{{hack._id}}/upload" method="post" enctype="multipart/form-data">
+        <input class="files1" type="text" placeholder="Enter team Name" name="teamname">
         <input class="files" type="file" name="file">
         <input class="files1" type="submit" value="Upload">
     </form>
 
     <br>
-    <a class="heading" href="/">Go Back Home</a>
+    <a class="heading" href="/clienthome">Go Back Home</a>
     <br>
-    <a class="heading" href="/files">Go Back to Uploaded Files</a>
+    <a class="heading" href="/files">Uploaded files</a>
 </body>
 
 </html>

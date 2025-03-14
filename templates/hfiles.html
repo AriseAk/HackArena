@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uploaded Files</title>
+    <link rel="stylesheet" href="/static/layout.css" />
+</head>
+
+<body>
+    <div class="space">
+        <div class="logo">
+            <button class="logo-dp" onclick="window.location.href='/clienthome'">HackArena</button>
+        </div>
+    </div>
+
+    <h2 class="heading">Uploaded Files by Team</h2>
+
+    <div class="team-container">
+        <div class="card-box">
+        {% for team, files in team_files.items() %}
+            <div class="team-card">
+                <h3>{{ team }}</h3>
+                <div class="files-list">
+                    {% for file in files %}
+                        <a href="{{ url_for('serve_file', hack_id=hack._id, teamname=team, file_id=file.id) }}" target="_blank">
+                            {{ file.filename }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="divider"></div> <!-- Divider added after each team card -->
+        {% endfor %}
+    </div>
+    </div>
+    
+    
+
+    <br />
+    <a class="heading" href="/hosthome">Go Back Home</a>
+</body>
+
+</html>

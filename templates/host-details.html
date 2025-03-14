@@ -11,7 +11,7 @@
 <body>
     <div class="space">
         <div class="logo">
-            <button class="logo-dp" onclick="window.location.href='/clienthome'">HackArena</button>
+            <button class="logo-dp" onclick="window.location.href='/hosthome'">HackArena</button>
         </div>
     </div>
     <div class="space"></div>
@@ -38,13 +38,7 @@
     <div class="space"></div>
     <div class="border2">
         <div class="longerbox">
-            <button class="innerlongerbox profile">Register
-                <img src="/static/assets/dropdown.svg" alt="">
-                <div class="dropdown-content">
-                    <li><a href="/hackathon/{{hack._id}}/find">Looking For a Team</a></li>
-                    <li><a href="/hackathon/{{hack._id}}/reg">Already Have a Team</a></li>
-                    <li><a href="/hackathon/{{hack._id}}/upload">Upload</a></li>
-                  </div>
+            <button class="innerlongerbox profile" onclick="window.location.href='/host/{{hack._id}}/files'">Submitted Files
             </button>
         </div>
     </div>

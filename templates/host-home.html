@@ -11,13 +11,9 @@
 <body>
     <div class="nav">
         <div class="head logo">
-            <button class="logo-dp" onclick="window.location.href='/'">HackArena</button>
+            <button class="logo-dp" onclick="window.location.href='/logout'">HackArena</button>
         </div>
         <div class="right">
-            <div class="searchbar">
-                <input class="search" type="text" placeholder="Search For Hackathons">
-                <button class="button"><img class="s" src="/static/assets/search.svg" alt="" srcset=""></button>
-            </div>
             <button class="profile">
                 <div class="pro"></div><img src="/static/assets/dropdown.svg" alt="">
                 <div class="dropdown-content">
@@ -40,7 +36,7 @@
         <h2>Your Hackathons</h2>
         <div id="hackathon-list">
             {% for hack in hacks %}
-            <a href="/hackathon/{{ hack.id }}" class="hack-link">
+            <a href="/host/{{ hack.id }}" class="hack-link">
                 <div class="hack-card">
                     <h3>{{ hack.title }}</h3>
                     <p>Date: {{ hack.date }}</p>
