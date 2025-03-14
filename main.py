@@ -45,8 +45,8 @@ hosts.create_index("username", unique=True)
 
 google = oauth.register(
     name='google',
-    client_id='YOUR_CLIENT_ID',
-    client_secret='YOUR_CLIENT_SECRET',
+    client_id='GOOGLE_CLIENT_ID',
+    client_secret='GOOGLE_CLIENT_SECRET',
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     access_token_url='https://accounts.google.com/o/oauth2/token',
     redirect_uri='https://hackarena.onrender.com/auth/google/callback',
@@ -55,8 +55,8 @@ google = oauth.register(
 
 github = oauth.register(
     name='github',
-    client_id='YOUR_GITHUB_CLIENT_ID',
-    client_secret='YOUR_GITHUB_CLIENT_SECRET',
+    client_id='GITHUB_CLIENT_ID',
+    client_secret='GITHUB_CLIENT_SECRET',
     authorize_url='https://github.com/login/oauth/authorize',
     access_token_url='https://github.com/login/oauth/access_token',
     redirect_uri='https://hackarena.onrender.com/auth/github/callback',
