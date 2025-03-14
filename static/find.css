@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Junge&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Junge&display=swap');
+
+*{
+    font-family: "Junge", cursive;
+    background-color: #f4f4f9;
+    padding:0px;
+    margin:0px;
+    background-color: #d7dbe8;
+}
+
+.logo {
+    height: 6vh;
+    background-color:#6e7385;
+    color: white;
+    display: flex;
+}
+
+.logo-dp {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 0px;
+    font-size: 23px;
+    font-family: "Junge", cursive;
+    }
+
+.input-box, .profile-list {
+    background-color: #c3c4cb;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(18, 18, 18, 0.1);
+    margin-bottom: 20px;
+    border: 2px solid #000000;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.sub{
+    background-color: #2a372a;
+    color: white;
+    cursor: pointer;
+}
+
+.sub:hover {
+    background-color: #45a049;
+}
+
+.profile-box {
+    border: 1px solid #000000;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: #ece5e5;
+    display:flex ;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-box h3 {
+    margin: 0;
+    color: #000000;
+}
+
+.profile-box p {
+    margin: 5px 0;
+    color: #531717;
+}
+
+.req{
+    width:20vw;
+    height:10vh;
+}
+
+.line{
+    height: 1vh;
+    background-color: black;
+}
+
+.input-box form {
+    padding: 10px;
+    border: 2px solid #000000; 
+    border-radius: 5px; 
+    background-color: #e0e0e5; 
+}
+
+h2{
+    background-color: transparent;
+}
