@@ -192,13 +192,8 @@ Feel free to fork the repository and create a pull request!
 
 ## 🏆 **Credits**  
 - Built by the HackArena team  
-- Inspired by DevNovate and Build with India Hackathon  
-
----
-
-## 📃 **License**  
-This project is licensed under the MIT License.  
-
+- Inspired by DevNovate and Build with India Hackathon
+  
 ---
 
 ## 🌐 **Live Demo**  
