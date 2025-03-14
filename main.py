@@ -10,6 +10,7 @@ from pymongo.errors import DuplicateKeyError
 import gridfs
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
+from slugify import slugify
 
 
 load_dotenv()  
@@ -502,20 +503,52 @@ def hackathon_details(hack_id):
     if not hack:
         flash("Hackathon not found!")
         return redirect('/clienthome')
-
-    # Calculate days remaining
+    reg=0
+    add = client[slugify(hack['title'])]
+    helper = add['hackinfo']
+    reg=helper.count_documents({})*int(hack['team-size'])
     today = datetime.now(timezone.utc)
     rdate = hack.get('rdate')
     today = today.replace(tzinfo=None)
     days_remaining = (rdate - today).days if rdate else None
-    return render_template("hackathon-user.html", hack=hack, days_remaining=days_remaining)
+    hack['_id'] = str(hack['_id'])
+    return render_template("hackathon-user.html", hack=hack, days_remaining=days_remaining,reg=reg)
 
 @app.route("/hackathon/<hack_id>/reg", methods=["GET", "POST"])
 def team_reg(hack_id):
-    if request.method=="POST":
+    if request.method == "POST":
+        hack = hic.find_one({'_id': ObjectId(hack_id)})
+        add = client[slugify(hack['title'])]
+        helper = add['hackinfo']
+        
+        helper.create_index("teamname", unique=True)
+
+        teamname = request.form.get('team_name')
+        
+        try:
+            helper.insert_one({'teamname': teamname})
+        except DuplicateKeyError:
+            return "Error: Team name already exists. Please choose a different one."
+
+        for i in range(1, int(hack['team-size']) + 1):
+            member_name = request.form.get(f'member_name_{i}')
+            member_email = request.form.get(f'member_email_{i}')
+            
+            helper.update_one(
+                {"teamname": teamname},
+                {"$set": {
+                    f'member{i}': {
+                        'name': member_name,
+                        'email': member_email
+                    }
+                }}
+            )
+        
         return redirect("/clienthome")
     else:
-        return render_template("teams.html")
+        hack = hic.find_one({'_id': ObjectId(hack_id)})
+        return render_template("teams.html",hack=hack)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
