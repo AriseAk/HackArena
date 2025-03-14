@@ -18,11 +18,7 @@
     <!-- About You Box -->
     <div class="input-box">
         <h2>About You</h2>
-<<<<<<< HEAD
         <form action="/hackathon/{{ hack._id }}/team" method="POST">
-=======
-        <form action="/hackathon/{{hack.id}}/team" method="POST">
->>>>>>> 6bb7caac91f0b2bda4668bf43045a1dc1183a07d
             <input type="text" name="name" placeholder="Your Name" required>
             <textarea name="about" placeholder="Write about yourself..." required></textarea>
             <button type="submit" class="sub">Save</button>
@@ -36,11 +32,8 @@
         <div class="profile-box">
             <div class="group"><h3>{{ person.name }}</h3>
             <p>{{ person.about }}</p></div>
-<<<<<<< HEAD
             <button class="sub req" onclick="window.location.href='/{{hack._id}}/{{person._id}}/email'">Send Request</button>
-=======
             <button class="sub req">Send Request</button>
->>>>>>> 6bb7caac91f0b2bda4668bf43045a1dc1183a07d
         </div>
         {% endfor %}
     </div>
