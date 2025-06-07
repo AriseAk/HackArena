@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Junge&display=swap');
 
-body{
-    padding:0;
-    margin:0;
+body {
+    padding: 0;
+    margin: 0;
     background-color: #A3ADCB;
 }
 
-.form-control{
+.form-control {
     border-radius: 8px;
-    border:none;
+    border: none;
 }
 
 .logo {
@@ -30,10 +30,10 @@ body{
     font-family: "Junge", cursive;
 }
 
-.line{
-    width:60vw;
-    background-color:white;
-    height:2px;
+.line {
+    width: 60vw;
+    background-color: white;
+    height: 2px;
 }
 
 .space {
@@ -45,7 +45,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:5vw;
+    gap: 5vw;
     padding-left: 2vw;
 }
 
@@ -85,8 +85,8 @@ body{
     height: 1.5vh;
 }
 
-.space3{
-    width:20vh;
+.space3 {
+    width: 20vh;
 }
 
 .longerbox {
@@ -100,7 +100,7 @@ body{
     align-items: center;
 }
 
-.border2{
+.border2 {
     height: 42vh;
     display: flex;
     justify-content: center;
@@ -108,15 +108,15 @@ body{
 }
 
 .innerlongerbox {
-    background-color:#A3ADCB;
+    background-color: #A3ADCB;
     height: 8vh;
     width: 25vw;
     border-radius: 20px;
     padding: 4px;
-    border:none;
+    border: none;
 }
 
-.innerlongerbox:hover{
+.innerlongerbox:hover {
     cursor: pointer;
 }
 
@@ -134,63 +134,74 @@ body{
 .smallerbox {
     background-color: #5f6579;
     width: 60px;
-    height: 60px; 
+    height: 60px;
 }
 
 
-.border3{
+.border3 {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
-    gap:5vw;
+    gap: 5vw;
     flex-direction: row;
     padding-left: 2vw;
 }
 
-.longerbox2{
+.longerbox2 {
     background-color: #5f6579;
     height: 5vh;
-    width: 35vw;
     border-radius: 20px;
     padding: 2vw;
-    display:flex;
+    display: flex;
     justify-content: left;
     align-items: center;
-    gap:2vw;
+    gap: 2vw;
 }
 
-.border4{
+.border4 {
     display: flex;
-    justify-content:center;
-    gap:25vw;
+    justify-content: center;
+    gap: 25vw;
     align-items: center;
-    padding:2vw;
+    padding: 2vw;
 }
 
-.subgroup{
-    display:flex;
-    gap:2vw;
+@media screen and (max-width: 600px) {
+    .border3 {
+        gap: 5vh;
+        flex-direction: column;
+    }
+    .border4{
+        gap: 2vh;
+        flex-direction: column;
+    }
 }
 
-.det{
-    color:white;
+
+.subgroup {
+    display: flex;
+    gap: 2vw;
 }
 
-.smallerbox > img{
+.det {
+    color: white;
+}
+
+.smallerbox>img {
     object-fit: contain;
-    width: 100%; 
+    width: 100%;
     height: 100%;
 }
 
-.sub{
+.sub {
     background-color: #5f6579;
-    border:none;
-    padding:10px;
+    border: none;
+    padding: 10px;
     border-radius: 25px;
-    color:white;
+    color: white;
 }
 
-.sub:hover{
+.sub:hover {
     cursor: pointer;
 }
 
@@ -235,9 +246,9 @@ body{
     display: block;
 }
 
-.profile{
-    display:flex;
+.profile {
+    display: flex;
     justify-content: center;
     align-items: center;
-    gap:10px;
+    gap: 10px;
 }
