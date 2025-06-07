@@ -168,7 +168,7 @@ button:hover {
     color: white;
     display: flex;
     align-items: center;
-
+    width: 145px;
 
 }
 
@@ -181,4 +181,5 @@ button:hover {
     border: 0px;
     font-size: 25px;
     font-family: "Junge", cursive;
+    
 }
