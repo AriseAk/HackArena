@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,27 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HackArena</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body>
-    <nav class="header">
-        <span>HackArena</span>
-        <div class="space">
-            <a class="header" href="{{ url_for('login_page') }}">Login</a>
-            <a class="header" href="{{ url_for('register_page') }}">Register</a>
+    <div class="container">
+        <nav class="header">
+            <span>HackArena</span>
+            <div class="space">
+                <a class="header" href="{{ url_for('login_page') }}">Login</a>
+                <a class="header" href="{{ url_for('register_page') }}">Register</a>
+            </div>
+        </nav>
+        <div class="line"></div>
+        <div class="idk">
+            <img src="/static/assets/pic1.jpg" alt="HackArena Image">
+            <img src="/static/assets/wallpaper.jpg" alt="" srcset="">
+            <div class="buttons">
+                <button class="hack" onclick="window.location.href='/reghost'">Host</button>
+                <button class="hack" onclick="window.location.href='/register'">Attend</button>
+            </div>
         </div>
-    </nav>
-    <div class="line"></div>
-    <div class="idk">
-        <img src="/static/assets/pic1.jpg" alt="HackArena Image">
-        <div class="buttons">
-            <button class="hack" onclick="window.location.href='/reghost'">Host</button>
-            <button class="hack"  onclick="window.location.href='/register'">Attend</button>
+        <div class="line"></div>
+        <div class="bottom">
+            <span class="footer">Code. Create. Compete. Innovate the Future!</span>
         </div>
     </div>
-    <div class="line"></div>
-    <div class="bottom">
-        <span class="footer">Code. Create. Compete. Innovate the Future!</span>
+    <div class="box ">
+        
     </div>
 </body>
+
 </html>
