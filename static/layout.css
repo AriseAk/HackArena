@@ -243,16 +243,24 @@ body {
 }
 
 .choose {
+    padding: 20px;
     background-color: #6e7385;
     font-family: "Junge", cursive;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap:5vw;
     align-items: center
+}
+
+@media (max-width:600px) {
+    .choose{
+   gap:2vh;
+    flex-direction: column;
+    }
 }
 
 .files {
     background-color: #828bab;
-    ;
     border: 0;
     font-family: "Junge", cursive;
 }

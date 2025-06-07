@@ -26,10 +26,14 @@
                 {% for i in range(1, hack['team-size']|int + 1) %}
                 <div class="member">
                     <h3>Member {{ i }}</h3>
-                    <label>Name:</label>
-                    <input type="text" name="member_name_{{ i }}" {% if i == 1 %}required{% endif %}>
-                    <label>Mail-ID:</label>
-                    <input type="email" name="member_email_{{ i }}" {% if i == 1 %}required{% endif %}>
+                    <div>
+                        <label>Name:</label>
+                        <input type="text" name="member_name_{{ i }}" {% if i==1 %}required{% endif %}>
+                    </div>
+                    <div>
+                        <label>Mail-ID:</label>
+                        <input type="email" name="member_email_{{ i }}" {% if i==1 %}required{% endif %}>
+                    </div>
                 </div>
                 {% endfor %}
 
