@@ -382,3 +382,45 @@ input[type="file"] {
     background-color: black;
     margin: 20px auto;
 }
+.header{
+    display: block;
+}
+
+.box{
+    display: none;
+}
+
+
+@media (max-width:1200px) {
+    .login{
+        width: 70vw;
+        height: 35vh;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+    }
+    .innerbox{
+        width: 60vw;
+        height: 30vh;
+    }
+    .header{
+        display: none;
+    }
+    .box{
+        font-size: 50px;
+        display: flex;
+        justify-content: center;
+    }
+    .submit{
+        position: absolute;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-25%);
+    }
+    .border{
+        height: 50vh;
+    }
+    .space4{
+        height: 15vh;
+    }
+}
