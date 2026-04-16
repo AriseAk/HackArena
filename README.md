@@ -1,132 +1,105 @@
+# HackArena
 
-# 🚀 **HackArena**  
-
-HackArena is a platform designed to **host and manage hackathons** effortlessly. Inspired by the DevNovate track from the **Build with India Hackathon**, HackArena allows organizers to create and manage hackathons, while participants can register, form teams, upload project files, and track progress in real time.  
-
----
-
-## 🌟 **Features**  
-✅ **Host Hackathons** – Create and manage hackathons with flexible settings.  
-✅ **Team Registration** – Allow participants to register, form teams, and manage members.  
-✅ **File Upload & Retrieval** – Secure file upload using **MongoDB GridFS**.  
-✅ **OAuth Login** – Login with Google using OAuth for easy authentication.  
-✅ **Profile Management** – Display participant profiles and allow team discovery.  
-✅ **Secure & Scalable** – Built with Flask and MongoDB for a scalable backend.  
+A platform for hosting and managing hackathons — built for organizers and participants alike.
 
 ---
 
-## 🏗️ **Tech Stack**  
-- **Backend:** Flask, MongoDB (GridFS)  
-- **Frontend:** HTML, CSS (Jinja Templates)  
-- **Authentication:** OAuth (Google)  
-- **Hosting:** Render  
+## Overview
+
+HackArena lets organizers create hackathons with custom settings, while participants can register, form or find teams, upload project files, and track submission deadlines. Inspired by the DevNovate track from the Build with India Hackathon.
+
+Live demo: [hackarena.onrender.com](https://hackarena.onrender.com)
 
 ---
 
-## 🚀 **Getting Started**  
+## Features
 
-### **1. Clone the Repository**  
+- **Hackathon management** — Create and configure hackathons with mode, duration, team size, prize pool, and registration deadlines
+- **Team registration** — Register with an existing team or use the team-finder to connect with other participants
+- **File uploads** — Submit project files securely via MongoDB GridFS, viewable per team
+- **OAuth login** — Sign in with Google or GitHub; no passwords required
+- **Dual roles** — Separate flows for hosts (organizers) and clients (participants)
+- **Email notifications** — Sends connection requests between participants looking for teammates
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Flask (Python) |
+| Database | MongoDB + GridFS |
+| Auth | OAuth 2.0 (Google, GitHub) via Authlib |
+| Templates | Jinja2 + HTML/CSS |
+| Hosting | Render |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- A MongoDB Atlas cluster
+- Google and/or GitHub OAuth credentials
+
+### Installation
+
 ```bash
+# Clone the repo
 git clone https://github.com/AriseAk/HackArena.git
 cd hackarena
-```
 
----
-
-### **2. Create a Virtual Environment**  
-```bash
+# Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # On Linux/macOS
-# On Windows:
-venv\Scripts\activate
-```
+source venv/bin/activate      # macOS/Linux
+# venv\Scripts\activate       # Windows
 
----
-
-### **3. Install Dependencies**  
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
----
+### Environment Variables
 
-### **4. Set Up Environment Variables**  
-Create a `.env` file in the root directory and add:
+Create a `.env` file in the project root:
 
-```plaintext
-MONGO_URI=mongodb+srv://your-mongo-uri
+```env
+MONGO_CLIENT=mongodb+srv://your-mongo-uri
 SECRET_KEY=your-secret-key
-OAUTH_CLIENT_ID=your-client-id
-OAUTH_CLIENT_SECRET=your-client-secret
+
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+
 EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password
+EMAIL_PASSWORD=your-app-password
 ```
 
----
-
-### **5. Run the Flask App**  
-Run the app locally:  
+### Run Locally
 
 ```bash
-python app.py
+python main.py
 ```
 
-or use Gunicorn:  
-
-```bash
-gunicorn app:app
-```
+Visit `http://localhost:5000` in your browser.
 
 ---
 
-### **6. Open in Browser**  
-Open your browser and go to:  
+## Deployment (Render)
 
-```
-http://localhost:5000
-```
+1. Push your project to GitHub
+2. Create a new **Web Service** on [Render](https://render.com) and connect the repository
+3. Set the following:
 
----
+| Setting | Value |
+|---|---|
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `gunicorn main:app` |
 
-## 🌍 **Deploy on Render**  
-
-### **1. Create a GitHub Repository**  
-Push your project to GitHub:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/yourusername/hackarena.git
-git push -u origin main
-```
-
----
-
-### **2. Deploy on Render**  
-- Go to [Render](https://render.com)  
-- Create a new **Web Service**  
-- Connect your GitHub repository  
-
----
-
-### **3. Set Configuration**  
-- **Build Command:**  
-```bash
-pip install -r requirements.txt
-```
-- **Start Command:**  
-```bash
-gunicorn app:app
-```
-- **Environment Variables:**  
-Set the environment variables in Render settings.  
-
----
-
-### **4. Flask Port Binding**  
-Ensure Flask binds to the correct port in `app.py`:  
+4. Add your environment variables in the Render dashboard
+5. Ensure Flask binds to the correct port in `main.py`:
 
 ```python
 port = int(os.getenv("PORT", 5000))
@@ -135,70 +108,70 @@ app.run(host="0.0.0.0", port=port)
 
 ---
 
-## 📂 **Folder Structure**  
+## Project Structure
+
 ```
-📂 hackarena
-├── 📂 templates
-├── 📂 static
-├── 📄 app.py
-├── 📄 requirements.txt
-├── 📄 .env
-├── 📄 Procfile
-└── 📄 README.md
+hackarena/
+├── templates/          # Jinja2 HTML templates
+├── static/             # CSS and static assets
+├── main.py             # Application entry point and routes
+├── requirements.txt
+├── .env                # Environment variables (not committed)
+├── Procfile
+└── README.md
 ```
 
 ---
 
-## 🛠️ **Endpoints**  
+## API Endpoints
 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/`       | Home page |
-| GET/POST | `/login` | OAuth login with Google |
+|---|---|---|
+| GET | `/` | Home page |
+| GET/POST | `/login` | Participant login |
+| GET/POST | `/register` | Participant registration |
+| GET/POST | `/loghost` | Host login |
+| GET/POST | `/reghost` | Host registration |
+| GET | `/clienthome` | Participant dashboard |
+| GET | `/hosthome` | Host dashboard |
 | GET/POST | `/hackathon/<hack_id>` | View hackathon details |
-| POST   | `/hackathon/<hack_id>/register` | Register a team |
-| GET    | `/profile/<user_id>` | View user profile |
-| POST   | `/upload/<hack_id>/<teamname>` | Upload project file |
-| GET    | `/download/<hack_id>/<teamname>/<file_id>` | Download project file |
+| GET/POST | `/hackathon/<hack_id>/reg` | Register a team |
+| GET/POST | `/hackathon/<hack_id>/upload` | Upload project file |
+| GET | `/hackathon/<hack_id>/<teamname>/files` | View team's files |
+| GET | `/hackathon/<hack_id>/<teamname>/<file_id>` | Download a file |
+| GET/POST | `/hackathon/<hack_id>/find` | Join team-finder board |
+| GET | `/host/<hack_id>/files` | View all submissions (host) |
+| GET | `/host/add/hack` | Create a new hackathon |
 
 ---
 
-## 💡 **How It Works**  
-1. Organizers create a hackathon.  
-2. Participants register and create teams.  
-3. Teams can upload files and track progress.  
-4. All data is securely stored in MongoDB (GridFS).  
-5. OAuth ensures quick and secure login.  
+## How It Works
+
+1. A **host** registers, creates a hackathon, and sets the details (date, duration, team size, prize pool)
+2. **Participants** browse open hackathons and register individually or as a team
+3. Participants without a team can use the **team-finder** to list themselves and send connection requests via email
+4. Teams upload their project files before the deadline
+5. Hosts can view all team submissions from their dashboard
 
 ---
 
-## 🚀 **Future Plans**  
-- ✅ Real-time chat for team members  
-- ✅ Improved search and filtering for hackathons  
-- ✅ Integration with GitHub for project tracking  
+## Roadmap
+
+- Real-time team chat
+- Search and filtering for hackathons
+- GitHub integration for project submission tracking
 
 ---
 
-## 🤝 **Contributing**  
-Feel free to fork the repository and create a pull request!  
+## Contributing
 
-1. Fork it  
-2. Create your feature branch (`git checkout -b feature/awesome-feature`)  
-3. Commit your changes (`git commit -m "Add some feature"`)  
-4. Push to the branch (`git push origin feature/awesome-feature`)  
-5. Create a new pull request  
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add your feature"`
+4. Push and open a pull request
 
 ---
 
-## 🏆 **Credits**  
-- Built by the HackArena team  
-- Inspired by DevNovate and Build with India Hackathon
-  
----
+## Credits
 
-## 🌐 **Live Demo**  
-👉 [https://hackarena.onrender.com](https://hackarena.onrender.com)  
-
----
-
-🔥 **HackArena – Empowering the next generation of developers!** 😎  
+Built by the HackArena team. Inspired by the DevNovate track from the Build with India Hackathon.
